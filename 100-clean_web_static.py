@@ -7,27 +7,31 @@ from fabric.api import *
 env.hosts = ['100.26.253.193', '54.237.112.101']
 
 
+def clean_local(number=0):
+    """cleans the pack"""
+    lists = local('ls -1t versions', capture=True)
+    lists = lists.split('\n')
+    n = int(number)
+    if n in (0, 1):
+        n = 1
+    for f in lists[n:]:
+        local('rm versions/{}'.format(f))
+
+
+def clean_remote(number=0):
+    """cleans the data in webserver"""
+    lists = run('ls -1t /data/web_static/releases')
+    lists = lists.splitlines()
+    n = int(number)
+    if n in (0, 1):
+        n = 1
+    for f in lists[n:]:
+        if f == 'test':
+            continue
+        run('rm -rf /data/web_static/releases/{}'.format(f))
+
+
 def do_clean(number=0):
-    """
-    This is a method/function that removes outdated archives
-
-    Args:
-        number (int): The number of archives to keep
-    Description:
-        If number = 0 || 1, keep only the most recent archive
-        if number is 2, keep the 2 most recent archives
-    Returns:
-        Nothing
-    """
-    number = 1 if int(number) == 0 else int(number)
-
-    zipfiles = sorted(os.listdir("versions"))
-    [zipfiles.pop() for i in range(number)]
-    with lcd("versions"):
-        [local("rm ./{}".format(a)) for zipfile in zipfiles]
-
-    with cd("/data/web_static/releases"):
-        zipfiles = run("ls -tr").split()
-        zipfiles = [a for zipfile in zipfiles if "web_static_" in zipfile]
-        [zipfiles.pop() for i in range(number)]
-        [run("rm -rf ./{}".format(a)) for zipfile in zipfiles]
+    """deletes older versions of data from web server"""
+    clean_local(number)
+    clean_remote(number)
