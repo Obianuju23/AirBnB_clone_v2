@@ -14,44 +14,21 @@ env.hosts = ['100.26.253.193', '54.237.112.101']
 def do_deploy(archive_path):
     """A function that distributes an archive file to a web server"""
     if not exists(archive_path):
-        return (False)
+        return False
     try:
-        file = archive_path.split("/")[-1]
-        fn = file.split(".")[0]
-
-    if put(archive_path, "/tmp/{}".format(file)).failed is True:
-        return (False)
-
-    if run("sudo rm -rf /data/web_static/releases/{}/".
-            format(fn)).failed is True:
-        return (False)
-
-    if run("sudo mkdir -p /data/web_static/releases/{}/".
-            format(fn)).failed is True:
-        return (False)
-
-    if run("sudo tar -xzf /tmp/{} -C /data/web_static/releases/{}/".
-           format(file, fn)).failed is True:
-        return (False)
-
-    if run("sudo rm /tmp/{}".format(file)).failed is True:
-        return (False)
-
-    if run("sudo mv /data/web_static/releases/{}/web_static/* "
-           "/data/web_static/releases/{}/".format(fn, fn)).failed is True:
-        return (False)
-
-    if run("sudo rm -rf /data/web_static/releases/{}/web_static".
-           format(fn)).failed is True:
-        return (False)
-
-    if run("sudo rm -rf /data/web_static/current").failed is True:
-        return (False)
-
-    if run("sudo ln -s /data/web_static/releases/{}/ /data/web_static/current"
-            .format(fn)).failed is True:
-        return (False)
-
-    return True
+        file_name = archive_path.split("/")[-1]
+        no_ext = file_name.split(".")[0]
+        path = "/data/web_static/releases/"
+        put(archive_path, '/tmp/')
+        run('mkdir -p {}{}/'.format(path, no_ext))
+        run('tar -xzf /tmp/{} -C {}{}/'.format(file_name, path, no_ext))
+        run('rm /tmp/{}'.format(file_name))
+        run('mv {0}{1}/web_static/* {0}{1}/'.format(path, no_ext))
+        run('rm -rf {}{}/web_static'.format(path, no_ext))
+        run('rm -rf /data/web_static/current')
+        run('ln -s {}{}/ /data/web_static/current'.format(path, no_ext))
+        print("New version deployed!")
+        flag = True
     except Exception as e:
-    return false
+        flag = False
+    return flag
