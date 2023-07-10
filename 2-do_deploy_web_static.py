@@ -12,16 +12,7 @@ env.hosts = ['100.26.253.193', '54.237.112.101']
 
 
 def do_deploy(archive_path):
-    """
-    A function that distributes an archive file to a web server
-
-    Args:
-        archive_path (str): path to the archive to distribute
-
-    Returns:
-        True if the archive path exist and there is no error
-        Otherwise - False
-    """
+    """A function that distributes an archive file to a web server"""
     if osp.isfile(archive_path) is False:
         return (False)
     file = archive_path.split("/")[-1]
