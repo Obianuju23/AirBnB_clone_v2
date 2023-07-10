@@ -4,9 +4,7 @@ Module that generates a .tgz archive from the
 web_static directory
 """
 from os.path import exists
-from fabric.api import env
-from fabric.api import run
-from fabric.api import put
+from fabric.api import env, run, put
 
 
 env.hosts = ['100.26.253.193', '54.237.112.101']
