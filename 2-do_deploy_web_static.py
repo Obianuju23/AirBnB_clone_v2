@@ -7,7 +7,7 @@ from fabric.api import env
 from fabric.api import run
 from fabric.api import put
 
-"""setting the environment host for the servers"""
+
 env.hosts = ['100.26.253.193', '54.237.112.101']
 
 
