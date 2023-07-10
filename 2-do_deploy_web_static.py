@@ -3,6 +3,7 @@
 Module that generates a .tgz archive from the 
 web_static directory
 """
+
 from os.path import exists
 from fabric.api import env, run, put
 
