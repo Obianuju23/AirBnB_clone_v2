@@ -7,12 +7,13 @@ Routes:
 /c/<text> page included
 /python/(<text>) page included
 """
+
 from flask import Flask
 app = Flask(__name__)
 
 
 @app.route('/', strict_slashes=False)
-def hello_hbnb():
+def hello():
     """Route must display Hello HBNB! when queried"""
     return "Hello HBNB!"
 
@@ -24,7 +25,7 @@ def hbnb():
 
 
 @app.route('/c/<text>', strict_slashes=False)
-def custom_text(text):
+def hello_C(text):
     """so the route must display c + text"""
     return "C {}".format(text.replace("_", " "))
 
@@ -37,4 +38,4 @@ def python_text(text="is cool"):
 
 
 if __name__ == '__main__':
-    app.run(host=i'0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5000)
