@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" 
+"""
 This Scripts starts Flask web application on 0.0.0.0, port 5000
 """
 
@@ -18,6 +18,7 @@ def hbnb():
     """Return string when route queried
     """
     return 'HBNB'
+
 
 if __name__ == '__main__':
     app.url_map.strict_slashes = False
