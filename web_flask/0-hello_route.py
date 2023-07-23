@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" 
+"""
 This Scripts starts Flask web
 application on 0.0.0.0, port 5000
 """
