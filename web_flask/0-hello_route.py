@@ -10,7 +10,7 @@ app = Flask(__name__)
 @app.route('/')
 def hello_hbnb():
     """Shows the route what to display"""
-    return 'Hello HBNB!'
+    return "Hello HBNB!"
 
 if __name__ == '__main__':
     app.url_map.strict_slashes = False
